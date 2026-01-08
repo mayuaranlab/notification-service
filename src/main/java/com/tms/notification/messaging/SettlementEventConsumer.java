@@ -36,7 +36,7 @@ public class SettlementEventConsumer {
         String correlationId = (String) settlementEvent.get("correlationId");
 
         try {
-            MDC.put(CorrelationIdFilter.CORRELATION_ID_KEY, correlationId);
+            MDC.put(CorrelationIdFilter.CORRELATION_ID_MDC_KEY, correlationId);
             log.info("Received settlement event for notification: settlementId={}, eventType={}",
                 settlementId, eventType);
 
@@ -57,7 +57,7 @@ public class SettlementEventConsumer {
             log.error("Failed to process settlement notification: settlementId={}", settlementId, e);
             throw e;
         } finally {
-            MDC.remove(CorrelationIdFilter.CORRELATION_ID_KEY);
+            MDC.remove(CorrelationIdFilter.CORRELATION_ID_MDC_KEY);
         }
     }
 

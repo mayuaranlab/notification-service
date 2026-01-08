@@ -35,7 +35,7 @@ public class RiskAlertConsumer {
         String correlationId = (String) alertEvent.get("correlationId");
 
         try {
-            MDC.put(CorrelationIdFilter.CORRELATION_ID_KEY, correlationId);
+            MDC.put(CorrelationIdFilter.CORRELATION_ID_MDC_KEY, correlationId);
             log.info("Received risk alert for notification: alertId={}", alertId);
 
             notificationService.handleRiskAlert(alertEvent);
@@ -46,7 +46,7 @@ public class RiskAlertConsumer {
             log.error("Failed to process risk alert notification: alertId={}", alertId, e);
             throw e;
         } finally {
-            MDC.remove(CorrelationIdFilter.CORRELATION_ID_KEY);
+            MDC.remove(CorrelationIdFilter.CORRELATION_ID_MDC_KEY);
         }
     }
 
